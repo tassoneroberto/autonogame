@@ -21,9 +21,9 @@ cd aut0game
 
 You can install this Python module locally on Windows or Unix.
 
-#### Windows
+#### Windows (Powershell)
 
-```bash
+```powershell
 py -m venv venv
 .\venv\Scripts\Activate.ps1
 py -m pip install -e .
@@ -45,10 +45,24 @@ You can run the GUI by simply executing the following command:
 aut0game
 ```
 
-## Build Windows executable
+## Build app
 
-A Windows executable `.exe` can be built by running the following command:
+A Windows executable `.exe` (or MacOS application `.app`) can be built using the `pyinstaller` software (more info [here](https://pyinstaller.org/en/stable/usage.html#cmdoption-version-file)):
 
-```bash
-pyinstaller --onefile --noupx -w --windowed .\gui.py
+```powershell
+pyinstaller --clean --noupx -w -F -n aut0game ./src/aut0game/gui.py
 ```
+
+or you can use the `Make` command:
+
+```powershell
+make app
+```
+
+If you are on a Windows OS and you don't have `Make` already installed you can get it from [CHOCOLATEY](https://chocolatey.org/install):
+
+```powershell
+choco install make
+```
+
+The `./dist` folder will contain the portable executable.

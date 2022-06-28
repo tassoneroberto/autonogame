@@ -5,3 +5,4 @@ __pycache__/
 gui.spec
 **/*.egg-info
 credentials.txt
+*.spec

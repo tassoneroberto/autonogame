@@ -6,12 +6,19 @@
         "buildfacilities",
         "buildres",
         "buildresources",
+        "choco",
         "columnspan",
         "cordinate",
+        "noupx",
         "Ogame",
+        "onefile",
         "padx",
         "pady",
+        "pyinstaller",
+        "pyogame",
         "relogin",
-        "textvariable"
+        "tassoneroberto",
+        "textvariable",
+        "venv"
     ]
 }
