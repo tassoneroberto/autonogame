@@ -3,9 +3,9 @@
 import logging
 from typing import Union
 
-from aut0game.bot import OgameBot
-from aut0game.config import Config
-from aut0game.crypto import Crypto
+from autonogame.bot import OgameBot
+from autonogame.config import Config
+from autonogame.crypto import Crypto
 from ogame import OGame
 
 logging.getLogger(__name__)

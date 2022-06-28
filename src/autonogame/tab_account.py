@@ -5,9 +5,9 @@ import threading
 import tkinter as tk
 from tkinter import ttk
 
-from aut0game.auth import Auth
-from aut0game.bot import OgameBot
-from aut0game.config import Config
+from autonogame.auth import Auth
+from autonogame.bot import OgameBot
+from autonogame.config import Config
 
 logging.getLogger(__name__)
 logging.root.setLevel(logging.INFO)

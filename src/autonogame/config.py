@@ -5,8 +5,8 @@ import glob
 import logging
 import os
 
-from aut0game.bot import OgameBot
-from aut0game.crypto import Crypto
+from autonogame.bot import OgameBot
+from autonogame.crypto import Crypto
 from ogame import OGame
 
 logging.getLogger(__name__)
@@ -18,7 +18,7 @@ class Config(object):
         super().__init__()
 
         # create configuration folder if it does not exist
-        self.app_folder = os.path.join(os.getenv("APPDATA"), "aut0game")
+        self.app_folder = os.path.join(os.getenv("APPDATA"), "autonogame")
         self.accounts_folder = os.path.join(self.app_folder, "accounts")
         for folder in [self.app_folder, self.accounts_folder]:
             if not os.path.exists(folder):

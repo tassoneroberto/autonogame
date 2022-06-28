@@ -1,7 +1,7 @@
 from distutils.util import convert_path
 from setuptools import find_packages, setup
 
-module_name = "aut0game"
+module_name = "autonogame"
 main_ns = {}
 ver_path = convert_path(f"src/{module_name}/version.py")
 with open(ver_path) as ver_file:
@@ -15,13 +15,14 @@ setup(
     license="MIT",
     description="Ogame bot",
     keywords=["ogame", "bot", "hack", "script"],
+    long_description_content_type="text/markdown",
     long_description=open("README.md", encoding="utf8").read(),
     install_requires=[
         "cryptography==37.0.2",
         "pyinstaller==5.1",
         "ogame==8.4.0.22",
     ],
-    url="https://github.com/tassoneroberto/aut0game",
+    url="https://github.com/tassoneroberto/autonogame",
     author="Roberto Tassone",
     author_email="roberto.tassone@proton.me",
     classifiers=[
@@ -36,7 +37,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "aut0game = aut0game.gui:main",
+            "autonogame = autonogame.gui:main",
         ],
     },
 )

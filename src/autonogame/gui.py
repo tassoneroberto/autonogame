@@ -4,16 +4,16 @@ import tkinter as tk
 from threading import Thread
 from tkinter import messagebox, ttk
 
-from aut0game.auth import Auth
-from aut0game.config import Config
-from aut0game.tab_account import TabAccount
-from aut0game.version import __version__
+from autonogame.auth import Auth
+from autonogame.config import Config
+from autonogame.tab_account import TabAccount
+from autonogame.version import __version__
 
 
 class GUI(object):
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title(f"aut0game v{__version__}")
+        self.window.title(f"autonogame v{__version__}")
         self.window.resizable(False, False)
         self.window_height = 600
         self.window_width = 800

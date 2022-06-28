@@ -1,4 +1,4 @@
-# aut0game
+# autonogame
 
 Bot for the browser game [Ogame](https://en.ogame.gameforge.com/).
 
@@ -13,8 +13,8 @@ If you are a developer and you want to contribute to this project you can clone,
 ### Clone
 
 ```bash
-git clone --recursive git@github.com:tassoneroberto/aut0game.git
-cd aut0game
+git clone --recursive git@github.com:tassoneroberto/autonogame.git
+cd autonogame
 ```
 
 ### Install
@@ -42,7 +42,7 @@ python -m pip install -e .
 You can run the GUI by simply executing the following command:
 
 ```bash
-aut0game
+autonogame
 ```
 
 ## Build app
@@ -50,7 +50,7 @@ aut0game
 A Windows executable `.exe` (or MacOS application `.app`) can be built using the `pyinstaller` software (more info [here](https://pyinstaller.org/en/stable/usage.html#cmdoption-version-file)):
 
 ```bash
-pyinstaller --clean --noupx -w -F -n aut0game ./src/aut0game/gui.py
+pyinstaller --clean --noupx -w -F -n autonogame ./src/autonogame/gui.py
 ```
 
 or you can use the `Make` command:
