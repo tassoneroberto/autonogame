@@ -6,3 +6,5 @@ gui.spec
 **/*.egg-info
 credentials.txt
 *.spec
+.vscode
+app/
