@@ -19,7 +19,6 @@ setup(
     long_description=open("README.md", encoding="utf8").read(),
     install_requires=[
         "cryptography==37.0.2",
-        "pyinstaller==5.1",
         "ogame==8.4.0.22",
     ],
     url="https://github.com/tassoneroberto/autonogame",

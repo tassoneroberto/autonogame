@@ -47,16 +47,10 @@ autonogame
 
 ## Build app
 
-A Windows executable `.exe` (or MacOS application `.app`) can be built using the `pyinstaller` software (more info [here](https://pyinstaller.org/en/stable/usage.html#cmdoption-version-file)):
+A Windows executable `.exe` (or MacOS application `.app`) can be built using the `pyinstaller` software (more info [here](https://pyinstaller.org/en/stable/usage.html#cmdoption-version-file)). The command can be execute using `Make`:
 
 ```bash
-pyinstaller --clean --noupx -w -F -n autonogame ./src/autonogame/gui.py
-```
-
-or you can use the `Make` command:
-
-```bash
-make app
+make build-app
 ```
 
 If you are on a Windows OS and you don't have `Make` already installed you can get it from [CHOCOLATEY](https://chocolatey.org/install):
@@ -65,4 +59,4 @@ If you are on a Windows OS and you don't have `Make` already installed you can g
 choco install make
 ```
 
-The `./dist` folder will contain the portable executable.
+The `./app` folder will contain the portable executable.
