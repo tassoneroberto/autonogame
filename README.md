@@ -1,12 +1,14 @@
 # autonogame
 
-Bot for the browser game [Ogame](https://en.ogame.gameforge.com/).
+Bot for the browser game OGame.
+
+<https://en.ogame.gameforge.com/>
 
 This software is under development. It is capable of building `resources`, `deposits` and `facilities`. New features will be implemented in the future.
 
 It is built on top of the Python module `pyogame` which provides the API to communicate with the game. The GitHub repository is [here](https://github.com/alaingilbert/pyogame).
 
-## Download
+## Installing
 
 You can install this software as a `pip` package and run it from a terminal.
 
@@ -21,18 +23,14 @@ In alternative you can download and execute the pre-built app (Windows only) by 
 
 If you are a developer and you want to contribute to this project you can clone, install and test this software on your Windows or Unix machine.
 
-### Clone
-
 ```bash
 git clone --recursive git@github.com:tassoneroberto/autonogame.git
 cd autonogame
 ```
 
-### Install
-
 You can install this Python module locally on Windows or Unix.
 
-#### Windows (Powershell)
+### Windows
 
 ```powershell
 py -m venv venv
@@ -40,7 +38,7 @@ py -m venv venv
 py -m pip install -e .
 ```
 
-#### Unix
+### Unix
 
 ```bash
 python -m venv venv
