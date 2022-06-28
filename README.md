@@ -6,6 +6,17 @@ This software is under development. It is capable of building `resources`, `depo
 
 It is built on top of the Python module `pyogame` which provides the API to communicate with the game. The GitHub repository is [here](https://github.com/alaingilbert/pyogame).
 
+## Download
+
+You can install this software as a `pip` package and run it from a terminal.
+
+```bash
+pip install autonogame
+autonogame
+```
+
+In alternative you can download and execute the pre-built app (Windows only) by visiting the [Releases](https://github.com/tassoneroberto/autonogame/releases) page.
+
 ## Contributing
 
 If you are a developer and you want to contribute to this project you can clone, install and test this software on your Windows or Unix machine.
