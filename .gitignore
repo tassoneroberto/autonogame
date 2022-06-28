@@ -1,0 +1,7 @@
+venv/
+dist/
+build
+__pycache__/
+gui.spec
+**/*.egg-info
+credentials.txt
