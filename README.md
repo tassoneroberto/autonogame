@@ -49,13 +49,13 @@ aut0game
 
 A Windows executable `.exe` (or MacOS application `.app`) can be built using the `pyinstaller` software (more info [here](https://pyinstaller.org/en/stable/usage.html#cmdoption-version-file)):
 
-```powershell
+```bash
 pyinstaller --clean --noupx -w -F -n aut0game ./src/aut0game/gui.py
 ```
 
 or you can use the `Make` command:
 
-```powershell
+```bash
 make app
 ```
 
