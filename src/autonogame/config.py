@@ -4,6 +4,7 @@ import configparser
 import glob
 import logging
 import os
+import traceback
 
 from autonogame.bot import OgameBot
 from autonogame.crypto import Crypto
@@ -122,8 +123,8 @@ class Config(object):
                 password=password,
                 token=token,
             )
-        except Exception as exc:
-            logging.error(exc)
+        except Exception:
+            logging.error(traceback.print_exc())
 
     def delete_account(self, universe, username):
         for file in os.listdir(self.accounts_folder):

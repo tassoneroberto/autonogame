@@ -2,6 +2,7 @@
 
 import logging
 import time
+import traceback
 
 from ogame import OGame
 from ogame.constants import buildings
@@ -182,20 +183,22 @@ class OgameBot(object):
                     # Early stage strategy
                     early_stage_planet = False
                     for step_tuple, level in self.EARLY_STAGE_STEPS:
-                        if (
-                            step_tuple[2] == "supplies"
-                            or step_tuple[2] == "facilities"
-                        ):
+                        if step_tuple[2] == "supplies":
+                            structures = self.curr_planet_sup
+                        if step_tuple[2] == "facilities":
+                            structures = self.curr_planet_fac
+                        if structures:
                             if (
                                 getattr(
-                                    self.curr_planet_sup,
+                                    structures,
                                     buildings.building_name(step_tuple),
                                 ).level
                                 < level
                             ):
                                 early_stage_planet = True
                                 if getattr(
-                                    self, buildings.building_name(step_tuple)
+                                    structures,
+                                    buildings.building_name(step_tuple),
                                 ).is_possible:
                                     self.notify(
                                         "Building "
@@ -215,8 +218,8 @@ class OgameBot(object):
                         self.build_deposits(planet_id)
                         self.build_mines(planet_id)
 
-                except Exception as exc:
-                    logging.error(exc)
+                except Exception:
+                    logging.error(traceback.print_exc())
                     self.refresh_session()
                 finally:
                     # self.notify("waiting...")
@@ -239,9 +242,10 @@ class OgameBot(object):
     def update_current_planet_info(self, planet_id):
         # get planet name
         self.current_planet_name = self.empire.name_by_planet_id(planet_id)
-        # get resources and supply
+        # get resources, supplies and facilities
         self.curr_planet_res = self.empire.resources(planet_id)
         self.curr_planet_sup = self.empire.supply(planet_id)
+        self.curr_planet_fac = self.empire.facilities(planet_id)
         # update resources
         self.metal_mine = self.curr_planet_sup.metal_mine
         self.crystal_mine = self.curr_planet_sup.crystal_mine

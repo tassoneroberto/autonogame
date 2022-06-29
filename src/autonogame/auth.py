@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import logging
+import traceback
 from typing import Union
 
 from autonogame.bot import OgameBot
@@ -72,8 +73,8 @@ class Auth(object):
                 password=password,
                 token=token,
             )
-        except Exception as exc:
-            logging.error(exc)
+        except Exception:
+            logging.error(traceback.print_exc())
 
     def logout(self, account_bot: OgameBot):
         self.config.delete_account(

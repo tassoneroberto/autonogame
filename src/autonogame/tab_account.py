@@ -150,6 +150,7 @@ class TabAccount(ttk.Frame):
             text="Stop",
             command=self.stop_bot,
             width=20,
+            state=tk.DISABLED,
         )
         self.button_stop.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
 
@@ -173,6 +174,7 @@ class TabAccount(ttk.Frame):
         self.label_botstatus.config(text=f"Status: {bot_status_text}")
 
     def start_bot(self):
+        self.disable_buttons_start_pressed()
         self.text_logs.insert(tk.END, "Starting..." + "\n")
         x = threading.Thread(target=self.bot.start)
         x.start()
@@ -185,8 +187,31 @@ class TabAccount(ttk.Frame):
                 tk.END, "The bot is already stopping..." + "\n"
             )
         else:
+            self.enable_buttons_stop_pressed()
             self.text_logs.insert(tk.END, "Stopping..." + "\n")
             self.bot.stop()
+
+    def disable_buttons_start_pressed(self):
+        # enable stop button
+        self.button_stop.config(state=tk.NORMAL)
+        # disable all
+        self.button_logout.config(state=tk.DISABLED)
+        self.tab_settings_check_buildres.config(state=tk.DISABLED)
+        self.tab_settings_check_buildfac.config(state=tk.DISABLED)
+        self.tab_settings_check_builddepot.config(state=tk.DISABLED)
+        self.button_save_settings.config(state=tk.DISABLED)
+        self.button_start.config(state=tk.DISABLED)
+
+    def enable_buttons_stop_pressed(self):
+        # disable stop button
+        self.button_stop.config(state=tk.DISABLED)
+        # enable all
+        self.button_logout.config(state=tk.NORMAL)
+        self.tab_settings_check_buildres.config(state=tk.NORMAL)
+        self.tab_settings_check_buildfac.config(state=tk.NORMAL)
+        self.tab_settings_check_builddepot.config(state=tk.NORMAL)
+        self.button_save_settings.config(state=tk.NORMAL)
+        self.button_start.config(state=tk.NORMAL)
 
     def logout(self):
         # stop notify
