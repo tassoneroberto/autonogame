@@ -24,7 +24,7 @@ In alternative you can download and execute the pre-built app (Windows only) by 
 If you are a developer and you want to contribute to this project you can clone, install and test this software on your Windows or Unix machine.
 
 ```bash
-git clone --recursive git@github.com:tassoneroberto/autonogame.git
+git clone git@github.com:tassoneroberto/autonogame.git
 cd autonogame
 ```
 
