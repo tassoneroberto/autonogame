@@ -15,8 +15,8 @@ class GUI(object):
         self.window = tk.Tk()
         self.window.title(f"autonogame v{__version__}")
         self.window.resizable(False, False)
-        self.window_height = 600
-        self.window_width = 800
+        self.window_height = 500
+        self.window_width = 630
         self.update_window_size()
         self.padx = 15
         self.pady = 15
@@ -90,11 +90,11 @@ class GUI(object):
         account_password = self.tab_login_entry_password.get()
 
         if not account_universe or not account_email or not account_password:
-            self.tab_login_label_message_var.set("All fields are required!")
+            self.tab_login_label_message_var.set("All fields are required")
             return
 
         if self.config.already_logged_in(account_universe, account_email):
-            self.tab_login_label_message_var.set("Account already added!")
+            self.tab_login_label_message_var.set("Account already added")
 
         account_bot = self.auth.login_client(
             account_universe, account_email, account_password
@@ -102,7 +102,7 @@ class GUI(object):
         if account_bot:
             self.add_account_tab(account_bot)
         else:
-            self.tab_login_label_message_var.set("Login failed!")
+            self.tab_login_label_message_var.set("Login failed")
 
     def add_account_tab(self, account_bot):
         new_tab = TabAccount(account_bot)

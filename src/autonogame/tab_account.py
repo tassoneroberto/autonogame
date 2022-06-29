@@ -36,33 +36,33 @@ class TabAccount(ttk.Frame):
             self.tab_account_labelframe_user,
             text=f"Email: {self.bot.empire.username}",
         )
-        self.label_email.grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
+        self.label_email.grid(row=0, column=0, padx=5, pady=0, sticky=tk.W)
 
         self.label_server_number = tk.Label(
             self.tab_account_labelframe_user,
             text=f"Server number: {self.bot.empire.server_number}",
         )
         self.label_server_number.grid(
-            row=1, column=0, padx=5, pady=5, sticky=tk.W
+            row=1, column=0, padx=5, pady=0, sticky=tk.W
         )
 
         self.label_server_id = tk.Label(
             self.tab_account_labelframe_user,
             text=f"Server ID: {self.bot.empire.server_id}",
         )
-        self.label_server_id.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
+        self.label_server_id.grid(row=2, column=0, padx=5, pady=0, sticky=tk.W)
 
         self.label_language = tk.Label(
             self.tab_account_labelframe_user,
             text=f"Language: {self.bot.empire.language}",
         )
-        self.label_language.grid(row=3, column=0, padx=5, pady=5, sticky=tk.W)
+        self.label_language.grid(row=3, column=0, padx=5, pady=0, sticky=tk.W)
 
         self.label_universe = tk.Label(
             self.tab_account_labelframe_user,
             text=f"Universe: {self.bot.empire.universe}",
         )
-        self.label_universe.grid(row=4, column=0, padx=5, pady=5, sticky=tk.W)
+        self.label_universe.grid(row=4, column=0, padx=5, pady=0, sticky=tk.W)
 
         self.button_logout = tk.Button(
             self.tab_account_labelframe_user,
@@ -129,7 +129,7 @@ class TabAccount(ttk.Frame):
         # Bot commands frame
         self.tab_account_labelframe_commands = tk.LabelFrame(self, text="Bot")
         self.tab_account_labelframe_commands.grid(
-            row=0, column=3, padx=5, pady=5, sticky=tk.W
+            row=0, column=2, padx=5, pady=5, sticky=tk.W
         )
 
         self.label_botstatus = tk.Label(
@@ -155,13 +155,13 @@ class TabAccount(ttk.Frame):
         self.button_stop.grid(row=2, column=0, padx=5, pady=5, sticky=tk.W)
 
         # Logs
-        self.text_logs = tk.Text(self, height="20", width="80")
-        self.text_logs.grid(row=2, column=0, padx=5, pady=5, columnspan=2)
+        self.text_logs = tk.Text(self, height="18", width="76")
+        self.text_logs.grid(row=2, column=0, padx=5, pady=5, columnspan=3)
 
     def notify(self, message: str):
         if self.bot.logout_command:
             return
-        self.text_logs.insert(tk.END, message + "\n")
+        self.text_logs.insert("1.0", message + "\n")
         logging.info(f"Bot: {message}")
         self.update_bot_status()
 
@@ -175,20 +175,18 @@ class TabAccount(ttk.Frame):
 
     def start_bot(self):
         self.disable_buttons_start_pressed()
-        self.text_logs.insert(tk.END, "Starting..." + "\n")
+        self.notify("Starting...")
         x = threading.Thread(target=self.bot.start)
         x.start()
 
     def stop_bot(self):
         if not self.bot.running:
-            self.text_logs.insert(tk.END, "The bot is already stopped" + "\n")
+            self.notify("The bot is already stopped")
         elif self.bot.stop_command:
-            self.text_logs.insert(
-                tk.END, "The bot is already stopping..." + "\n"
-            )
+            self.notify("The bot is already stopping...")
         else:
             self.enable_buttons_stop_pressed()
-            self.text_logs.insert(tk.END, "Stopping..." + "\n")
+            self.notify("Stopping...")
             self.bot.stop()
 
     def disable_buttons_start_pressed(self):
@@ -236,4 +234,4 @@ class TabAccount(ttk.Frame):
             username=self.bot.empire.username,
             settings=settings,
         )
-        logging.info("Settings saved")
+        self.notify("Settings saved")

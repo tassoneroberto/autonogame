@@ -34,7 +34,7 @@ class Auth(object):
             )
             if account_bot:
                 logged_in_accounts.append(account_bot)
-                logging.info(f"Account `{account['email']}` loaded!")
+                logging.info(f"Account `{account['email']}` loaded")
         return logged_in_accounts
 
     def login_client(
@@ -52,7 +52,7 @@ class Auth(object):
         )
 
         if empire:
-            logging.info(f"Account `{account_email}` loaded!")
+            logging.info(f"Account `{account_email}` logged in")
             credentials = {
                 "universe": account_universe,
                 "email": account_email,

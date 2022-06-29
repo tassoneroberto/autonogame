@@ -16,6 +16,8 @@ class OgameBot(object):
     stop_command = False
     logout_command = False
     running = False
+    # TODO add it to settings
+    refresh_time = 10  # seconds
 
     # deposit capacity in k starting from level 0
     DEPOSIT_CAPACITY = [
@@ -146,7 +148,8 @@ class OgameBot(object):
             return
 
         # Strategy
-        # 1) Check: level of metal mine must be 2 higher than crystal mine.
+        # 1) Check: level of metal mine must be 2 levels higher
+        #           than crystal mine.
         # 2) Check: for every 2 levels of crystal mines 1 level of
         #           deuterium mine must be built.
         # 3) Upgrade metal mine
@@ -168,10 +171,10 @@ class OgameBot(object):
     def start(self):
         self.stop_command = False
         if self.running:
-            self.notify("The bot is already running!")
+            self.notify("The bot is already running")
             return
         self.running = True
-        self.notify("Bot started!")
+        self.notify("Started")
 
         while not self.stop_command:
             for planet_id in self.planet_ids:
@@ -222,14 +225,14 @@ class OgameBot(object):
                     logging.error(traceback.print_exc())
                     self.refresh_session()
                 finally:
-                    # self.notify("waiting...")
-                    time.sleep(10)
+                    self.notify(f"Updating in {self.refresh_time}s...")
+                    time.sleep(self.refresh_time)
         self.running = False
         self.stop_command = False
-        self.notify("Stopped!")
+        self.notify("Stopped")
 
     def refresh_session(self):
-        self.notify("refreshing session...")
+        self.notify("Refreshing session...")
         self.empire.relogin()
         self.planet_ids = self.empire.planet_ids()
 
