@@ -5,7 +5,7 @@ import time
 import traceback
 
 from ogame import OGame
-from ogame.constants import buildings
+from ogame.constants import buildings, research
 
 logging.getLogger(__name__)
 logging.root.setLevel(logging.INFO)
@@ -78,8 +78,8 @@ class OgameBot(object):
         (buildings.solar_plant, 10),
         (buildings.deuterium_mine, 6),
         (buildings.metal_mine, 8),
-        # research: energy technology
-        # research: combustion drive
+        (research.energy, 1),
+        (research.combustion_drive, 1),
         (buildings.solar_plant, 11),
         (buildings.crystal_mine, 7),
         (buildings.metal_mine, 9),
@@ -105,21 +105,21 @@ class OgameBot(object):
         )
 
         # upgrade deposit if it is at 90% of its capacity or above
-        if (self.curr_planet_res.metal * 100) / (
+        if (self.curr_planet_resources.metal * 100) / (
             self.DEPOSIT_CAPACITY[self.metal_storage.level] * 1000
         ) > 90:
             if self.metal_storage.is_possible:
                 self.notify("Building metal_storage")
                 self.empire.build(what=buildings.metal_storage, id=planet_id)
 
-        if (self.curr_planet_res.crystal * 100) / (
+        if (self.curr_planet_resources.crystal * 100) / (
             self.DEPOSIT_CAPACITY[self.crystal_storage.level] * 1000
         ) > 90:
             if self.crystal_storage.is_possible:
                 self.notify("Building crystal_storage")
                 self.empire.build(what=buildings.crystal_storage, id=planet_id)
 
-        if (self.curr_planet_res.deuterium * 100) / (
+        if (self.curr_planet_resources.deuterium * 100) / (
             self.DEPOSIT_CAPACITY[self.deuterium_storage.level] * 1000
         ) > 90:
             if self.deuterium_storage.is_possible:
@@ -140,7 +140,7 @@ class OgameBot(object):
             + f"{self.deuterium_mine.level} {self.solar_plant.level}"
         )
 
-        if self.curr_planet_res.energy <= 0:
+        if self.curr_planet_resources.energy <= 0:
             self.notify("Energy is lower or equal than 0!")
             if self.solar_plant.is_possible:
                 self.notify("Building solar_plant")
@@ -183,29 +183,44 @@ class OgameBot(object):
                 try:
                     self.update_current_planet_info(planet_id)
 
-                    # Early stage strategy
+                    # Early stage planet strategy
                     early_stage_planet = False
                     for step_tuple, level in self.EARLY_STAGE_STEPS:
+
                         if step_tuple[2] == "supplies":
-                            structures = self.curr_planet_sup
+                            type = "Building"
+                            check_level = self.curr_planet_supply
+                            name = buildings.building_name(step_tuple)
                         if step_tuple[2] == "facilities":
-                            structures = self.curr_planet_fac
-                        if structures:
+                            type = "Building"
+                            check_level = self.curr_planet_facilities
+                            name = buildings.building_name(step_tuple)
+                        if step_tuple[2] == "research":
+                            type = "Researching"
+                            check_level = self.curr_planet_research
+                            name = research.research_name(step_tuple)
+
+                        if check_level:
                             if (
                                 getattr(
-                                    structures,
-                                    buildings.building_name(step_tuple),
+                                    check_level,
+                                    name,
                                 ).level
                                 < level
                             ):
+                                logging.info(
+                                    f"{self.current_planet_name} "
+                                    + "is in EARLY_STAGE mode"
+                                )
                                 early_stage_planet = True
                                 if getattr(
-                                    structures,
-                                    buildings.building_name(step_tuple),
+                                    check_level,
+                                    name,
                                 ).is_possible:
                                     self.notify(
-                                        "Building "
-                                        + buildings.building_name(step_tuple)
+                                        type
+                                        + " "
+                                        + name
                                         + " lv. "
                                         + str(level)
                                         + " on planet "
@@ -214,10 +229,17 @@ class OgameBot(object):
                                     self.empire.build(
                                         what=step_tuple, id=planet_id
                                     )
-                                break
+                                # can do research and build at the same time
+                                # go to next step if research
+                                if type != "Research":
+                                    break
 
                     if not early_stage_planet:
                         # Not early stage planet strategy
+                        logging.info(
+                            f"{self.current_planet_name} "
+                            + "is not in EARLY_STAGE mode"
+                        )
                         self.build_deposits(planet_id)
                         self.build_mines(planet_id)
 
@@ -245,16 +267,17 @@ class OgameBot(object):
     def update_current_planet_info(self, planet_id):
         # get planet name
         self.current_planet_name = self.empire.name_by_planet_id(planet_id)
-        # get resources, supplies and facilities
-        self.curr_planet_res = self.empire.resources(planet_id)
-        self.curr_planet_sup = self.empire.supply(planet_id)
-        self.curr_planet_fac = self.empire.facilities(planet_id)
+        # get resources, supplies, facilities and research
+        self.curr_planet_resources = self.empire.resources(planet_id)
+        self.curr_planet_supply = self.empire.supply(planet_id)
+        self.curr_planet_facilities = self.empire.facilities(planet_id)
+        self.curr_planet_research = self.empire.research(planet_id)
         # update resources
-        self.metal_mine = self.curr_planet_sup.metal_mine
-        self.crystal_mine = self.curr_planet_sup.crystal_mine
-        self.deuterium_mine = self.curr_planet_sup.deuterium_mine
-        self.solar_plant = self.curr_planet_sup.solar_plant
+        self.metal_mine = self.curr_planet_supply.metal_mine
+        self.crystal_mine = self.curr_planet_supply.crystal_mine
+        self.deuterium_mine = self.curr_planet_supply.deuterium_mine
+        self.solar_plant = self.curr_planet_supply.solar_plant
         # update deposits
-        self.metal_storage = self.curr_planet_sup.metal_storage
-        self.crystal_storage = self.curr_planet_sup.crystal_storage
-        self.deuterium_storage = self.curr_planet_sup.deuterium_storage
+        self.metal_storage = self.curr_planet_supply.metal_storage
+        self.crystal_storage = self.curr_planet_supply.crystal_storage
+        self.deuterium_storage = self.curr_planet_supply.deuterium_storage
