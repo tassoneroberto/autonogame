@@ -18,7 +18,7 @@ setup(
     long_description_content_type="text/markdown",
     long_description=open("README.md", encoding="utf8").read(),
     install_requires=[
-        "cryptography==38.0.3",
+        "cryptography==39.0.1",
         "ogame==8.4.0.22",
     ],
     url="https://github.com/tassoneroberto/autonogame",
